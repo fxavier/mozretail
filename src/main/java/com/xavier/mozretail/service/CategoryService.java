@@ -38,12 +38,15 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
+        verifyIfCategoryNotExists(id);
+        categoryRepository.deleteById(id);
+    }
+
+    private void verifyIfCategoryNotExists(Long id) {
         Optional<Category> categoryById = categoryRepository.findById(id);
         if(!categoryById.isPresent()) {
             throw new CategoryNotExistingException();
         }
-
-        categoryRepository.deleteById(id);
     }
 
 
